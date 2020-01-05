@@ -1,0 +1,26 @@
+    kind: pipeline
+    name: default
+
+    #platform:
+    #  os: linux
+    #  arch: arm64
+
+    steps:
+    - name: debootstrap
+      image: debian:buster-slim
+      commands:    
+      - mkdir raspbian-root
+      - apt update -yy && apt install -yy debootstrap
+      - debootstrap --arch armhf --variant minbase --no-check-gpg --foreign buster raspbian-root http://archive.raspbian.org/raspbian
+
+    - name: docker-build
+      image: plugins/docker
+      commands:
+      - sudo tar -C raspbian-root -c . | docker import - raspbian-temp
+      - docker images
+      
+    trigger:
+      event:
+      - push
+
+
