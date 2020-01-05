@@ -18,6 +18,7 @@
       commands:
       - sudo tar -C raspbian-root -c . | docker import - raspbian-temp
       - docker images
+      - echo 'end'
       
     trigger:
       event:
