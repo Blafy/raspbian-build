@@ -19,7 +19,6 @@
       - cp raspbian-root.tar /drone/src/
 
 
-    steps:
     - name: dockerize
       image: docker
       volumes:
