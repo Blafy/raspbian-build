@@ -15,15 +15,23 @@
       - ls /
       - ls
       - debootstrap --arch armhf --variant minbase --no-check-gpg --foreign buster /raspbian-root http://archive.raspbian.org/raspbian
-      - ls /
-      - ls
+      - tar -cvf raspbian-root.tar raspbian-root
+      - cp raspbian-root.tar /drone/src/
 
-    - name: docker-build
-      image: plugins/docker
+
+
+    kind: pipeline
+    type: exec
+    name: default
+
+
+
+    steps:
+    - name: greeting
       commands:
-      - sudo tar -C raspbian-root -c . | docker import - raspbian-temp
-      - docker images
-      - echo 'end'
+      - docker import raspbian-root.tar raspbian-temp
+
+
       
     trigger:
       event:
