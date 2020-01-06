@@ -15,12 +15,26 @@
       - ls /
       - ls
       - debootstrap --arch armhf --variant minbase --no-check-gpg --foreign buster /raspbian-root http://archive.raspbian.org/raspbian
-      - tar -cvf raspbian-root.tar raspbian-root
+      - tar -cf raspbian-root.tar raspbian-root
       - cp raspbian-root.tar /drone/src/
 
 
+    steps:
+    - name: dockerize
+      image: docker
+      volumes:
+      - name: dockersocket
+        path: /var/run/docker.sock
+      commands:
+      - docker --version
+      - docker import raspbian-root.tar raspbian
+      - docker images
 
 
+    volumes:
+    - name: dockersocket
+      host:
+        path: /var/run/docker.sock
       
     trigger:
       event:
