@@ -13,11 +13,14 @@
         path: /var/run/docker.sock
       commands:
       - apk add debootstrap perl
-      - cp * /
+      - cp debootstrap.sh /
       - cd /
+      - ./debootstrap.sh
+      - cd /drone/src
       - ./build.sh
       - echo "$DOCKER_PASSWORD" | docker login -u blafy --password-stdin
       - docker push blafy/raspbian
+      - docker system prune -af
 
 
     volumes:
