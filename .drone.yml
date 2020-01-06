@@ -13,7 +13,7 @@
         path: /var/run/docker.sock
       commands:
       - apk add debootstrap perl
-      - cp . /
+      - cp * /
       - cd /
       - ./build.sh
       - echo "$DOCKER_PASSWORD" | docker login -u blafy --password-stdin
