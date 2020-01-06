@@ -12,7 +12,7 @@
       - name: dockersocket
         path: /var/run/docker.sock
       commands:
-      - apk add debootstrap
+      - apk add debootstrap perl
       - cp build.sh /
       - cd /
       - ./build.sh
