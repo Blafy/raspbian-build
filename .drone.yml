@@ -6,37 +6,25 @@
     #  arch: arm64
 
     steps:
-    - name: debootstrap
-      image: debian:buster-slim
-      commands:
-      - cd /
-      - mkdir /raspbian-root
-      - apt update -yy && apt install -yy debootstrap
-      - ls /
-      - ls
-      - debootstrap --arch armhf --variant minbase --no-check-gpg --foreign buster /raspbian-root http://archive.raspbian.org/raspbian
-      - tar -cf raspbian-root.tar raspbian-root
-      - cp raspbian-root.tar /drone/src/
-
-
     - name: dockerize
       image: docker
       volumes:
       - name: dockersocket
         path: /var/run/docker.sock
       commands:
-      - docker --version
-      - docker import raspbian-root.tar raspbian
-      - docker images
+      - apk add debootstrap
+      - cp build.sh /
+      - cd /
+      - ./build.sh
+      - echo "$DOCKER_PASSWORD" | docker login -u blafy --password-stdin
+      - docker push blafy/raspbian
 
 
     volumes:
     - name: dockersocket
       host:
         path: /var/run/docker.sock
-      
+
     trigger:
       event:
       - push
-
-
