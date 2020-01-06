@@ -8,10 +8,15 @@
     steps:
     - name: debootstrap
       image: debian:buster-slim
-      commands:    
-      - mkdir raspbian-root
+      commands:
+      - cd /
+      - mkdir /raspbian-root
       - apt update -yy && apt install -yy debootstrap
-      - debootstrap --arch armhf --variant minbase --no-check-gpg --foreign buster raspbian-root http://archive.raspbian.org/raspbian
+      - ls /
+      - ls
+      - debootstrap --arch armhf --variant minbase --no-check-gpg --foreign buster /raspbian-root http://archive.raspbian.org/raspbian
+      - ls /
+      - ls
 
     - name: docker-build
       image: plugins/docker
