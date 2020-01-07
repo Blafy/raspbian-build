@@ -18,7 +18,7 @@
       - ./debootstrap.sh
       - cd /drone/src
       - ./build.sh
-      - echo "$DOCKER_PASSWORD" | docker login -u blafy --password-stdin
+      - echo $DOCKER_PASSWORD | docker login -u blafy --password-stdin
       - docker push blafy/raspbian
       - docker system prune -af
 
