@@ -21,8 +21,11 @@
       - ./debootstrap.sh
       - cd /drone/src
       - ./build.sh
+      - export DOCKER_CLI_EXPERIMENTAL=enabled
       - echo $DOCKER_PASSWORD | docker login -u blafy --password-stdin
       - docker push blafy/raspbian
+      - docker manifest annotate blafy/raspbian blafy/raspbian --arch arm --variant v6
+      - docker push manifest blafy/raspbian
       - docker system prune -af
 
 
