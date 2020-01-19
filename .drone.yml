@@ -26,7 +26,7 @@
       - docker push blafy/raspbian
       - docker manifest create blafy/raspbian blafy/raspbian
       - docker manifest annotate blafy/raspbian blafy/raspbian --arch arm --variant v6
-      - docker push manifest blafy/raspbian
+      - docker manifest push blafy/raspbian
       - docker system prune -af
 
 
